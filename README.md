@@ -9,3 +9,7 @@ Skill
 =====
 - 3 years of programming experience in C
 - Interest in big data processing
+
+Epilogue
+========
+I want to be of any assistance in the progress of your project.
