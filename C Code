@@ -1,0 +1,154 @@
+The program I made in the CSED 101 class at postech. (got A+ grade)
+
+Title : Making Arithmetic Result of Two Functions Using List.
+#include "list.h"
+
+void Print(LinkedList* list); // list의 출력함수
+void SumandSub(LinkedList* list1, LinkedList* list2, LinkedList *list3, int f); // list1, list2를 더하거나 빼는 함수 / 더한것을 list3에 넣음
+  																			// f=1이면 더하는 것이고, f=-1이면 빼는 함수이다.
+void Multi(LinkedList* list1, LinkedList* list2, LinkedList *list3); // list3에 list1과 list2을 곱한 함수를 넣어주는 함수
+
+int main(){
+  char a;
+  LinkedList Listf, Listg, Listh, Lists, Listm; // 순서대로 f,g,f+g,f-g,f*g를 넣어주는 구조체변수 선언
+  Coefficient *Cof; // 계수 저장 변수
+  initList(&Listf); // f 구조체 초기화
+  initList(&Listg); // g 구조체 초기화
+  initList(&Listh); // f+g 구조체 초기화
+  initList(&Lists); // f-g 구조체 초기화
+  initList(&Listm); // f*g 구조체 초기화
+  while (scanf ("%c",&a) && a!='-'){ // 입력받는 부호 받음
+  	Cof=(Coefficient*)malloc(sizeof(Coefficient)); // 각 항에 대한 정보를 저장할 것 메모리 할당
+  	scanf ("%d %d",&Cof->b,&Cof->a); // 계수와 차수 입력
+  	if (!Listf.size) putList(&Listf,Cof); // 리스트에 항에 대한 정보 넣음
+  	else putListAt(&Listf,Cof,Listf.size);
+  	Listf.size++; // 리스트 크기 증가
+  	scanf ("%*c"); // 쓸데없는 문자가 들어와 입력 받음
+  }
+  scanf ("%*c%*c"); // 쓸데없는 문자가 들어와 입력 받음
+  while (scanf ("%c",&a) && a!='-'){ // 입력받는 부호 받음
+  	Cof=(Coefficient*)malloc(sizeof(Coefficient)); // 각 항에 대한 정보를 저장할 것 메모리 할당
+  	scanf ("%d %d",&Cof->b,&Cof->a); // 계수와 차수 입력
+  	if (!Listg.size) putList(&Listg,Cof); // 리스트에 항에 대한 정보 넣음
+  	else putListAt(&Listg,Cof,Listg.size);
+  	Listg.size++; // 리스트 크기 증가
+  	scanf ("%*c"); // 쓸데없는 문자가 들어와 입력 받음
+  }
+  printf ("\nf = "); Print(&Listf); // f출력
+  printf ("g = "); Print(&Listg); // g출력
+  SumandSub(&Listf,&Listg,&Listh,1); // Listh에 f와 g를 더한거 넣음
+  SumandSub(&Listf,&Listg,&Lists,-1); // Lists에 f와 g를 더한거 넣음
+  printf ("\nf + g = "); Print(&Listh); // f+g출력
+  printf ("f - g = "); Print(&Lists); // f-g출력
+  printf ("f * g = ");
+  Multi(&Listf,&Listg,&Listm); // Listm에 f와 g를 곱한거 넣음
+  Print(&Listm); // f*g출력
+  freeList(&Listf); // List 동적할당 해준거 free를 해준다.
+  freeList(&Listg);
+  freeList(&Listh);
+  freeList(&Lists);
+  freeList(&Listm);
+  return 0;
+}
+
+void Print (LinkedList* list){ // list를 출력하는 함수
+  int i,f=0; // i : 반복문 돌리는 변수, f : 출력되었는지 확인하는 변수, 출력 안되었으면 0출력
+  LinkedListNode* Now; // 현재 리스트의 원소를 가르키는 변수
+  Coefficient *Cof; // 현 리스트의 원소의 계수와 차수를 저장하는 변수
+  Now=list->list; // 첫번째 원소를 가르키게 함
+  for (i=0;i<list->size;i++){ // 모든 원소를 출력할 수 있게 돌림
+  	Cof=(Coefficient*)Now->data; // 정보를 Cof에 대입
+  	if (Cof->a){ // 출력조건에 맞게 출력
+  		if (f && Cof->a>0) printf (" + ");
+  		f=1;
+  		if (!Cof->b || (Cof->a!=1 && Cof->a!=-1)){
+  			if (Cof->a>0) printf ("%d",Cof->a);
+  			else printf (" - %d",-Cof->a);
+  		}
+  		else if (Cof->a==-1) printf (" -");
+  		if (Cof->b && Cof->b-1) printf ("x^%d",Cof->b);
+  		else if (Cof->b) printf ("x");
+  	}
+  	Now=Now->next; // 그다음 원소로 넘어간다.
+  }
+  if (!f) printf ("0");
+  printf ("\n");
+}
+
+void SumandSub(LinkedList* list1, LinkedList* list2, LinkedList *list3, int f){ // list3에 list1+f*list2를 집어넣는 함수 (f가 1이면 더하는 것이고 -1이면 빼는 것)
+  int i,j;
+  LinkedListNode *Now1,*Now2,*Now3; // list1,list2,list3에서 현재 리스트의 원소를 가르키는 변수
+  Coefficient *Cof, *Cof1, *Cof2; // 현재 원소의 계수와 차수를 저장
+  Now1=list1->list; // list1,list2,list3의 첫번째 원소를 가르키게 함
+  Now2=list2->list;
+  Now3=list3->list;
+  for (i=0,j=0;i<list1->size || j<list2->size;){ // 각 리스트가 끝날때까지 돌려 list3에 원소를 차수내림차순으로 돌린다.
+  	Cof1=(Coefficient*)Now1->data; // 현 원소의 계수와 차수를 저장한다
+  	Cof2=(Coefficient*)Now2->data;
+  	Cof=(Coefficient*)malloc(sizeof(Coefficient)); // list1+f*list2의 원소의 계수를 저장할 공간을 마련한다.
+  	if (i==list1->size || (j!=list2->size && Cof1->b<Cof2->b)){ // 현 상태에서 두번째 차수가 더 크면 
+  		Cof->a=Cof2->a*f; // Cof에 f*Cof2를 집어넣는다.
+  		Cof->b=Cof2->b; // 차수는 그대로 한다.
+  		j++; // 하나 넣었다는 표시로 증가
+  		if (j<list2->size) Now2=Now2->next; // 만약 list2에 대한 정보를 넣을께 있다면 다음껄로 넘어간다.
+  	}
+  	else if (j==list2->size  || (i!=list1->size && Cof1->b>Cof2->b)){ // 현 상태에서 첫번째 차수가 더 크면 
+  		Cof->a=Cof1->a; // Cof에 Cof1를 집어넣는다.
+  		Cof->b=Cof1->b; // 차수는 그대로 한다.
+  		i++; // 하나 넣었다는 표시로 증가
+  		if (i<list1->size) Now1=Now1->next; // 만약 list1에 대한 정보를 넣을께 있다면 다음껄로 넘어간다.
+  	}
+  	else { // 만약 계수가 같다면 
+  		Cof->a=Cof1->a+Cof2->a*f; // Cof에 첫번째와 두번째 계수에 대한 것은 더하고 넣어준다.
+  		Cof->b=Cof1->b; // 차수는 그대로 한다.
+  		i++, j++; // 하나 넣었다는 표시로 증가시킨다.
+  		if (i<list1->size) Now1=Now1->next; // 만약 list1에 대한 정보를 넣을께 있다면 다음껄로 넘어간다.
+  		if (j<list2->size) Now2=Now2->next; // 만약 list2에 대한 정보를 넣을께 있다면 다음껄로 넘어간다.
+  	}
+  	if (!list3->size) putList(list3,Cof); // 리스트에 항에 대한 정보 넣음
+  	else putListAt(list3,Cof,list3->size);
+  	list3->size++; // 리스트 크기 증가
+  }
+}
+
+void Multi(LinkedList* list1, LinkedList* list2, LinkedList* list3){ // list3에 list1*list2를 집어넣는 함수
+  int i,j,k; // (i,j,k) : 반복문 돌리는 변수
+  LinkedListNode *Now1,*Now2,*Now3; // list1,list2,list3에서 현재 리스트의 원소를 가르키는 변수
+  Coefficient *S,*S1,*S2,*put; // (S,S1,S2) : 현재 list1,list2,list3의 원소의 계수와 차수를 저장, put : list1*list2를 저장하는 변수
+  Now1=list1->list; // list1의 첫번째 원소를 가르키게 함
+  for (i=0;i<list1->size;i++){ // list1의 원소개수만큼 돌림
+  	S1=(Coefficient*)Now1->data; // list1의 현 원소의 계수와 차수를 저장
+  	Now2=list2->list; // list2의 첫번째 원소를 가르키게 함
+  	for (j=0;j<list2->size;j++){ // list2의 원소개수만큼 돌림
+  		S2=(Coefficient*)Now2->data; // list2의 현 원소의 계수와 차수를 저장
+  		Now3=list3->list; // list3의 첫번째 원소를 가르키게 함
+  		for (k=0;k<list3->size;k++){ // list3의 원소개수만큼 돌림
+  			S=(Coefficient*)Now3->data; // list3의 현 원소의 계수와 차수를 저장
+  			if (S->b==S1->b+S2->b){ // 만약에 list3에 저장된 차수가 (list1의 차수)+(list2의 차수)가 같다면 
+  				S->a=S->a+S1->a*S2->a; // list3의 계수에 (list1의 계수)*(list2의 계수)를 더한다.
+  				break;
+  			}
+  			else if (S1->b+S2->b>S->b){ // 만약에 크다면 내림차순으로 정렬되어있으므로 삽입정렬처럼 넣어주고 끝낸다.
+  				put=(Coefficient*)malloc(sizeof(Coefficient)); // list3에 새로운 원소를 넣을 준비
+  				put->a=S1->a*S2->a; // 세번째 원소에 (첫번째 원소 계수)*(두번째 원소 계수)를 넣는다.
+  				put->b=S1->b+S2->b; // 세번째 원소에 (첫번째 원소 차수)+(두번째 원소 차수)를 넣는다
+  				if (!list3->size) putList(list3,put); // list3에 원소를 추가한다.
+  				else putListAt(list3,put,k);
+  				list3->size++; // 리스트의 크기 증가
+  				break;
+  			}
+  			Now3=Now3->next; // 그다음 원소로 넘어간다.
+  		}
+  		if (k==list3->size){ // 만약 넣을 원소가 가장 작은 차수라면 못넣었을 꺼니까 그것을 넣어준다
+  			put=(Coefficient*)malloc(sizeof(Coefficient)); // list3에 새로운 원소를 넣을 준비
+  			put->a=S1->a*S2->a; // 세번째 원소에 (첫번째 원소 계수)*(두번째 원소 계수)를 넣는다.
+  			put->b=S1->b+S2->b; // 세번째 원소에 (첫번째 원소 차수)+(두번째 원소 차수)를 넣는다
+  			if (!list3->size) putList(list3,put); // list3에 원소를 추가한다.
+  			else putListAt(list3,put,list3->size);
+  			list3->size++; // 리스트의 크기 증가
+  		}
+  		Now2=Now2->next; // 그다음 원소로 넘어간다.
+  	}
+  	Now1=Now1->next; // 그다음 원소로 넘어간다.
+  }
+}
