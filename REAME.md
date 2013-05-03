@@ -10,6 +10,11 @@ Skill
 - 3 years of programming experience in C
 - Interest in big data processing
 
+Contact
+-----
+Email: dreams90@postech.ac.kr
+Skype: postech-woohyeon
+
 #
 --------
                                    I want to be of any assistance in the progress of your project.
