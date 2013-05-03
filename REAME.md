@@ -1,5 +1,6 @@
 Woo-hyeon Shim (Sophomore year in POSTECH)
 ====
+
 Education
 ---------
 - POSTECH, GPA: 3.92/4.3 (First Semester of 2012)
@@ -7,8 +8,13 @@ Education
 
 Skill
 -----
-- 3 years of programming experience in C
-- Interest in big data processing
+- 3 years of Programming Experience in C
+- Interest in Big Data Processing
+
+Achievement
+----
+- Win the Silver Medal at Korea Olympiad in informatics(KOI) in 2011 and 2009
+- Science High School Distinct Rank Change : 100/160 -> 20/160
 
 Contact
 -----
