@@ -1,10 +1,9 @@
 The problem I solved in http://poj.org/.
-===
 ID : Tpovel (You can search what I solved before.)
-====
+==================================================
 
 Indexed Tree
----------------
+------------
 Problem: 2155  User: Tpovel 
 Memory: 24272K  Time: 782MS 
 Language: C++  Result: Accepted 
@@ -80,8 +79,7 @@ int main (){
 }
 
 Suffix Tree
-----------------
-
+-----------
 Problem: 2138  User: Tpovel 
 Memory: 4936K  Time: 204MS 
 Language: C++  Result: Accepted 
@@ -183,8 +181,8 @@ int main (){
   return 0;
 }
 
-MaxFlow
-------------
+Max Flow
+--------
 Problem: 2391  User: Tpovel 
 Memory: 2324K  Time: 844MS 
 Language: C++  Result: Accepted 
