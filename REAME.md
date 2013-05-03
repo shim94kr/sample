@@ -12,8 +12,8 @@ Skill
 
 Contact
 -----
-Email: dreams90@postech.ac.kr
-Skype: postech-woohyeon
+- Email: dreams90@postech.ac.kr
+- Skype: postech-woohyeon
 
 #
 --------
