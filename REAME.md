@@ -13,6 +13,7 @@ Skill
 
 Achievement
 ----
+- Solved 177 Problems which are in http://poj.org/
 - Win the Silver Medal at Korea Olympiad in informatics(KOI) in 2011 and 2009
 - Distinct Rank Change in Sejong Science High School : 100/160(First Period) -> 20/160(Last Period)
 
