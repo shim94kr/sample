@@ -10,7 +10,7 @@ Education
 Skill
 -----
 - 3 years of Programming Experience in C
-- Learned php/mysql, django in class
+- a little experience in php/mysql, django, C++
 
 Achievement
 ----
