@@ -20,7 +20,8 @@ Achievement
 
 Contact
 -----
-- Email: dreams90@postech.ac.kr
+- Email: thymightylove@gmail.com
+- Phone: 010-9490-0876
 - Skype: postech-woohyeon
 
 #
