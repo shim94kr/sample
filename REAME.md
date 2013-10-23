@@ -5,11 +5,12 @@ Education
 ---------
 - POSTECH, GPA: 3.92/4.3 (First Semester of 2012)
 - Stony Brook University, GPA: 3.93/4.0 (Second Semester of 2012)
+- POSTECH, GPA : 3.97/4.3 (First Semester of 2013)
 
 Skill
 -----
 - 3 years of Programming Experience in C
-- Interest in Big Data Processing
+- Learned php/mysql, django in class
 
 Achievement
 ----
